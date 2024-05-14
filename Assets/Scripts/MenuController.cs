@@ -6,6 +6,7 @@ public class MenuController : MonoBehaviour
     public GameObject GameContoller;
     public GameObject Menu;
     public GameObject Raft;
+    public Timer GameTimer;
 
     private SpawnObstacles _spawnObstacles;
 
@@ -22,14 +23,18 @@ public class MenuController : MonoBehaviour
         Raft.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         Raft.transform.position = new Vector3(0,0,0);
 
+        Raft.GetComponent<PlayerController>().CanMove(true);
+
         Menu.SetActive(false);
         _spawnObstacles.IsSpawningObstacles = false;
-        var coroutine = StartbstaclesWithDelay(3);
+        GameTimer.ResetTimer();
+        GameTimer.StartTimer();
+        var coroutine = StartObstaclesWithDelay(2);
         StartCoroutine(coroutine);
-
+   
     }
 
-    private IEnumerator StartbstaclesWithDelay(float delay)
+    private IEnumerator StartObstaclesWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         _spawnObstacles.IsSpawningObstacles = true;
