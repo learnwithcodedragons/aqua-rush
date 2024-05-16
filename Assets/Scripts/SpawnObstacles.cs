@@ -32,7 +32,7 @@ public class SpawnObstacles : MonoBehaviour
         } else
         {
             _currentDifficulty -= 0.2f;
-            _difficultyInterval = 10;
+            _difficultyInterval = 30;
         }
     }
 
