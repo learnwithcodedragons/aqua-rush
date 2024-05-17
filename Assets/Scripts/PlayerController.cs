@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float MovementSpeed;
-    public GameObject PlayAgain;
     public GameObject GameContoller;
     public Timer GameTimer;
   
@@ -26,14 +25,12 @@ public class PlayerController : MonoBehaviour
         _canMove = canMove;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_canMove)
@@ -99,7 +96,6 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            PlayAgain.SetActive(true);
             _canMove = false;
             GameTimer.StopTimer();
         }
