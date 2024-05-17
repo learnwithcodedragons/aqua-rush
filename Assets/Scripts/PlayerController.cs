@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public float MovementSpeed;
     public GameObject GameContoller;
     public Timer GameTimer;
+    public GameObject GameOverPanel;
   
     private Rigidbody2D _rb2d;
     private bool _canMove = true;
@@ -96,6 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            GameOverPanel.SetActive(true);
             _canMove = false;
             GameTimer.StopTimer();
         }

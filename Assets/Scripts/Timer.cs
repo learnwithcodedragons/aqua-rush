@@ -41,8 +41,8 @@ public class Timer : MonoBehaviour
         _isTiming = false;
     }
 
-    public float GetTimer()
+    public int GetTimer()
     {
-        return _timer;
+        return (int)_timer;
     }
 }
