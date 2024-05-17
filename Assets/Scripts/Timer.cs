@@ -5,8 +5,14 @@ public class Timer : MonoBehaviour
 {
     public TMP_Text _timerText;
 
-    private float _timer = 0.0f;
     private bool _isTiming;
+
+
+    private float timeElapsed;
+    private int minutes;
+    private int seconds;
+    private string timeString;
+
 
 
 
@@ -16,19 +22,34 @@ public class Timer : MonoBehaviour
     }
 
 
-    void FixedUpdate()
+    void Update()
     {
         if (_isTiming)
         {
-            _timer += Time.deltaTime;
-            int seconds = (int)(_timer % 60);
-            _timerText.text = seconds.ToString();
+            timeElapsed += Time.deltaTime;
+
+            // Calculate minutes and seconds
+            minutes = Mathf.FloorToInt(timeElapsed / 60F);
+            seconds = Mathf.FloorToInt(timeElapsed % 60F);
+
+            // Construct the time string based on the time elapsed
+          
+            if (timeElapsed < 60)
+            {
+                timeString = string.Format("{0:00}", seconds);
+            }
+            else
+            {
+                timeString = string.Format("{0}:{1:00}", minutes, seconds);
+            }
+
+            _timerText.text = timeString;
         }
     }
 
     public void ResetTimer()
     {
-        _timer = 0;
+        timeElapsed = 0;
     }
 
     public void StartTimer()
@@ -41,8 +62,8 @@ public class Timer : MonoBehaviour
         _isTiming = false;
     }
 
-    public int GetTimer()
+    public string GetTimer()
     {
-        return (int)_timer;
+        return timeString;
     }
 }

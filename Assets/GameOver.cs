@@ -10,7 +10,7 @@ public class GameOver : MonoBehaviour
 
     void Start()
     {
-        GameOverText.text = $"Wipe Out!/nYou lasted { GameTimer.GetTimer()} Seconds";
+        GameOverText.text = $"Wipe Out\nYou lasted { GameTimer.GetTimer()} Seconds";
         StartCoroutine(WaitToLoadMenu());
     }
 
