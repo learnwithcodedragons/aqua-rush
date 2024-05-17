@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnObstacles : MonoBehaviour
 {
-    public GameObject Obstacle;
+    public GameObject[] Obstacles;
     public bool IsSpawningObstacles;
     
     private float _spawnInterval;
@@ -40,8 +40,9 @@ public class SpawnObstacles : MonoBehaviour
     {
         if (IsSpawningObstacles)
         {
+            var obstacle = Obstacles[Random.Range(0, Obstacles.Length)];
             var position = new Vector3(Random.Range(-2.0f, 1.7f), 4.25f, 0);
-            Instantiate(Obstacle, position, Quaternion.identity);
+            Instantiate(obstacle, position, Quaternion.identity);
         }
     }
 }
