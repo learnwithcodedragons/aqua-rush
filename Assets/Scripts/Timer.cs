@@ -62,8 +62,13 @@ public class Timer : MonoBehaviour
         _isTiming = false;
     }
 
-    public string GetTimer()
+    public string GetTimeElaapsed()
     {
         return timeString;
+    }
+
+    public int GetTimeElapsedInSeconds()
+    {
+        return (int)(minutes / 60) + seconds;
     }
 }

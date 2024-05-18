@@ -1,22 +1,14 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
     public Timer GameTimer;
     public TMP_Text GameOverText;
+    public GameObject ScoreBoard;
 
     void Start()
     {
-        GameOverText.text = $"Wipe Out\nYou lasted { GameTimer.GetTimer()} Seconds";
-        StartCoroutine(WaitToLoadMenu());
+        GameOverText.text = $"Wipe Out\nYou lasted { GameTimer.GetTimeElaapsed()} Seconds";
     }
-
-    private IEnumerator WaitToLoadMenu()
-    {
-        yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Menu");
-    } 
 }
