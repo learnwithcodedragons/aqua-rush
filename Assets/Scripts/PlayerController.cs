@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     enum Direction
     {
         Left,
-        Right
+        Right,
+        Centre
     }
 
     public void CanMove(bool canMove)
@@ -30,13 +31,14 @@ public class PlayerController : MonoBehaviour
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        _direction = Direction.Centre;
     }
 
     void Update()
     {
         if (_canMove)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && _direction != Direction.Centre)
             {
                 _anim.SetBool("IsRowing", true);
 
