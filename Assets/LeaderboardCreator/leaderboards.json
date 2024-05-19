@@ -1,1 +1,14 @@
-{"leaderboards":[{"name":"DemoSceneLeaderboard","publicKey":"980324f10e2f03fc0fd6a38a70f88123919a6aed35a4aea86211ad58b68db9c4","secretKey":"SECRET KEY NOT PROVIDED DUE TO SECURITY REASONS"},{"name":"AquaRush","publicKey":"b9be2ca3db06c355e95a19b82216e6394ac278d7e16a2fb91f2cf42dcc7b7fc3","secretKey":"f9ced9793c02d250ac816c4b335e582280520727b4930885427a98b5c02354af937ca5d8cb18b669da0780cccd2bb9bc5354e774c9e4bc04e42ef67c43a4802328bd4cb267cdec2cf83ef29c82296d26b68cb9823d7f53b6a3e0c0d274dd70893f1e0c1e1ab680ba0ae92afc8cc1c6c514fa37ae4c7e39e77dd81b754f16cea7"}]}
+{
+  "leaderboards": [
+    {
+      "name": "DemoSceneLeaderboard",
+      "publicKey": "980324f10e2f03fc0fd6a38a70f88123919a6aed35a4aea86211ad58b68db9c4",
+      "secretKey": "SECRET KEY NOT PROVIDED DUE TO SECURITY REASONS"
+    },
+    {
+      "name": "AquaRush",
+      "publicKey": "b9be2ca3db06c355e95a19b82216e6394ac278d7e16a2fb91f2cf42dcc7b7fc3",
+      "secretKey": "f9ced9793c02d250ac816c4b335e582280520727b4930885427a98b5c02354af937ca5d8cb18b669da0780cccd2bb9bc5354e774c9e4bc04e42ef67c43a4802328bd4cb267cdec2cf83ef29c82296d26b68cb9823d7f53b6a3e0c0d274dd70893f1e0c1e1ab680ba0ae92afc8cc1c6c514fa37ae4c7e39e77dd81b754f16cea7"
+    }
+  ]
+}

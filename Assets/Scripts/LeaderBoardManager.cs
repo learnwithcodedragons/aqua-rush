@@ -29,8 +29,17 @@ public class LeaderBoardManager : MonoBehaviour
             {
                 var minutes = entries[i].Score / 60;
                 var seconds = entries[i].Score % 60;
+                var timeString = "0:00";
+                if (entries[i].Score < 60)
+                {
+                    timeString = string.Format("{0:00}", seconds);
+                }
+                else
+                {
+                    timeString = string.Format("{0}:{1:00}", minutes, seconds);
+                }
 
-                _leadersText[entries[i].Rank - 1].text = $"{entries[i].Rank}.{entries[i].Username} {minutes}: {seconds}";
+                _leadersText[entries[i].Rank - 1].text = $"{entries[i].Rank}.{entries[i].Username} {timeString}";
             }
 
             _topTenScore = entries.ToList().Find(e => e.Rank == 10).Score;
