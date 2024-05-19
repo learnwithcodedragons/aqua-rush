@@ -14,8 +14,11 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject LeaderBoard;
     public GameObject UserNameValidationText;
     public GameObject LeaderBoardEntry;
+    public GameObject Loading;
+    public GameObject ErrorMessage;
 
     private int _topTenScore;
+    private bool _leaderBoardReloading;
 
     private void Start()
     {
@@ -24,8 +27,15 @@ public class LeaderBoardManager : MonoBehaviour
 
     private void LoadEntries()
     {
-        Leaderboards.AquaRush.GetEntries(entries =>
+        Leaderboards.AquaRush.GetEntries((entries) =>
         {
+            if (_leaderBoardReloading)
+            {
+                _leaderBoardReloading = false;
+                Loading.SetActive(false);
+                LeaderBoard.SetActive(true);
+            }
+
             for (var i = 0; i < 10; i++)
             {
                 var minutes = entries[i].Score / 60;
@@ -44,7 +54,13 @@ public class LeaderBoardManager : MonoBehaviour
             }
 
             _topTenScore = entries.ToList().Find(e => e.Rank == 10).Score;
-        });
+        }, error =>
+        {
+            Loading.SetActive(false);
+            LeaderBoard.SetActive(false);
+            ErrorMessage.SetActive(true);
+        }
+            );
     }
     public void UploadEntry()
     {
@@ -56,8 +72,11 @@ public class LeaderBoardManager : MonoBehaviour
         
         if (regex.IsMatch(userName)) 
         {
+            Loading.SetActive(true);
             UserNameValidationText.SetActive(false);
             LeaderBoardEntry.SetActive(false);
+            LeaderBoard.SetActive(false);
+            _leaderBoardReloading = true;
             Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
                 if (isSuccessful)
                 {
