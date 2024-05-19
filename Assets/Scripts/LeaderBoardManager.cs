@@ -13,6 +13,7 @@ public class LeaderBoardManager : MonoBehaviour
     public Timer Timer;
     public GameObject LeaderBoard;
     public GameObject UserNameValidationText;
+    public GameObject LeaderBoardEntry;
 
     private int _topTenScore;
 
@@ -56,6 +57,7 @@ public class LeaderBoardManager : MonoBehaviour
         if (regex.IsMatch(userName)) 
         {
             UserNameValidationText.SetActive(false);
+            LeaderBoardEntry.SetActive(false);
             Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
                 if (isSuccessful)
                 {
