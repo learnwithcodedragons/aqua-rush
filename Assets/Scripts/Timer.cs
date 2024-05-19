@@ -69,6 +69,6 @@ public class Timer : MonoBehaviour
 
     public int GetTimeElapsedInSeconds()
     {
-        return (int)(minutes / 60) + seconds;
+        return (int)(minutes * 60) + seconds;
     }
 }

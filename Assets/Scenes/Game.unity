@@ -358,7 +358,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 6.6415405, y: 12.291252, z: 257.35645, w: 64.97313}
+  m_margin: {x: 6.6415405, y: 12.291252, z: 118.819214, w: 64.97313}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2150,7 +2150,6 @@ MonoBehaviour:
   - {fileID: 3102809582631922557, guid: aacc02ac5ae57244fbcef85ae5b49114, type: 3}
   - {fileID: 3102809582631922557, guid: b7eef96c7968d8c43b726a130d88990a, type: 3}
   - {fileID: 3102809582631922557, guid: 4d5fb22b9ffd768408e3aa6a4d43a8ee, type: 3}
-  IsSpawningObstacles: 1
 --- !u!114 &749590737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2756,8 +2755,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13, y: -298}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 86, y: -298}
+  m_SizeDelta: {x: 567.6943, y: 4.7653}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &878824381
 MonoBehaviour:
@@ -2779,7 +2778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Name cannnot contain spaces and special characters
+  m_text: Max 8 character, no spaces and special characters
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2788,8 +2787,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281027566
+  m_fontColor: {r: 0.93333334, g: 0.29411766, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2842,7 +2841,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -250.5581, w: -21.10419}
+  m_margin: {x: -35.541603, y: 0, z: -13.702881, w: -21.10419}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3167,6 +3166,7 @@ MonoBehaviour:
   GameTimer: {fileID: 1856162072}
   GameOverPanel: {fileID: 1310946728}
   LeaderBoardEntry: {fileID: 1150168429}
+  Obstacles: {fileID: 749590736}
 --- !u!95 &1007635823
 Animator:
   serializedVersion: 5

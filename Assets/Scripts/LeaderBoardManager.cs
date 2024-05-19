@@ -23,11 +23,14 @@ public class LeaderBoardManager : MonoBehaviour
 
     private void LoadEntries()
     {
-        Leaderboards.AquaRush.GetEntries( entries =>
+        Leaderboards.AquaRush.GetEntries(entries =>
         {
             for (var i = 0; i < 10; i++)
             {
-                _leadersText[entries[i].Rank - 1].text = $"{entries[i].Rank}.{entries[i].Username} {entries[i].Score}";
+                var minutes = entries[i].Score / 60;
+                var seconds = entries[i].Score % 60;
+
+                _leadersText[entries[i].Rank - 1].text = $"{entries[i].Rank}.{entries[i].Username} {minutes}: {seconds}";
             }
 
             _topTenScore = entries.ToList().Find(e => e.Rank == 10).Score;
@@ -38,7 +41,7 @@ public class LeaderBoardManager : MonoBehaviour
         var seconds = Timer.GetTimeElapsedInSeconds();
 
         var userName = _userNameInput.text;
-        string pattern = @"^[a-zA-Z0-9]+$";
+        string pattern = @"^[a-zA-Z0-9]{1,8}$";
         Regex regex = new Regex(pattern);
         
         if (regex.IsMatch(userName)) 

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Timer GameTimer;
     public GameObject GameOverPanel;
     public GameObject LeaderBoardEntry;
+    public SpawnObstacles Obstacles;
   
     private Rigidbody2D _rb2d;
     private bool _canMove = true;
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
             GameOverPanel.SetActive(true);
             _canMove = false;
             GameTimer.StopTimer();
+            Obstacles.StopSpawing();
 
             var topTenScore = _leaderBoardManager.GetTopTenScore();
 
