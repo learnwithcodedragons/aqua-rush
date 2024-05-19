@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public GameObject GameContoller;
     public Timer GameTimer;
     public GameObject GameOverPanel;
+    public GameObject LeaderBoardEntry;
   
     private Rigidbody2D _rb2d;
     private bool _canMove = true;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private Direction _direction;
     private bool _moveLeft;
     private bool _moveRight;
+    private LeaderBoardManager _leaderBoardManager;
 
     enum Direction
     {
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
         _rb2d = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _direction = Direction.Centre;
+        _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>();
     }
 
     void Update()
@@ -102,6 +105,13 @@ public class PlayerController : MonoBehaviour
             GameOverPanel.SetActive(true);
             _canMove = false;
             GameTimer.StopTimer();
+
+            var topTenScore = _leaderBoardManager.GetTopTenScore();
+
+            if(GameTimer.GetTimeElapsedInSeconds() > topTenScore)
+            {
+                LeaderBoardEntry.SetActive(true);
+            }
         }
     }
 }

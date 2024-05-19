@@ -4,6 +4,7 @@ using Dan.Main;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject LeaderBoard;
     public GameObject UserNameValidationText;
 
+    private int _topTenScore;
+
     private void Start()
     {
         LoadEntries();
@@ -20,14 +23,16 @@ public class LeaderBoardManager : MonoBehaviour
 
     private void LoadEntries()
     {
-        Leaderboards.AquaRush.GetEntries( entries => {
-            for(var i = 0; i < 10; i++ )
+        Leaderboards.AquaRush.GetEntries( entries =>
+        {
+            for (var i = 0; i < 10; i++)
             {
                 _leadersText[entries[i].Rank - 1].text = $"{entries[i].Rank}.{entries[i].Username} {entries[i].Score}";
             }
+
+            _topTenScore = entries.ToList().Find(e => e.Rank == 10).Score;
         });
     }
-
     public void UploadEntry()
     {
         var seconds = Timer.GetTimeElapsedInSeconds();
@@ -61,5 +66,10 @@ public class LeaderBoardManager : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public int GetTopTenScore()
+    {
+        return _topTenScore;
     }
 }
