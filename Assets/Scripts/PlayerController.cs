@@ -109,8 +109,10 @@ public class PlayerController : MonoBehaviour
             Obstacles.StopSpawing();
 
             var topTenScore = _leaderBoardManager.GetTopTenScore();
+            var playerBestScore = _leaderBoardManager.GetPlayersBestScore();
+            var timeElapsed = GameTimer.GetTimeElapsedInSeconds();
 
-            if(GameTimer.GetTimeElapsedInSeconds() > topTenScore)
+            if (timeElapsed > topTenScore  && timeElapsed > playerBestScore )
             {
                 LeaderBoardEntry.SetActive(true);
             }

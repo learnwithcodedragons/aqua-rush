@@ -18,6 +18,7 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject ErrorMessage;
 
     private int _topTenScore;
+    private int _playerBestScore;
     private bool _leaderBoardReloading;
     private TMP_Text _loadingText;
 
@@ -25,6 +26,7 @@ public class LeaderBoardManager : MonoBehaviour
     {
         _loadingText = Loading.GetComponent<TMP_Text>();
         LoadEntries();
+        SetPlayerBestScore();
     }
 
     private void LoadEntries()
@@ -99,6 +101,14 @@ public class LeaderBoardManager : MonoBehaviour
         } 
     }
 
+    private void SetPlayerBestScore()
+    {
+        Leaderboards.AquaRush.GetPersonalEntry(entry =>
+        {
+            _playerBestScore = entry.Score;
+        });
+    }
+
     public void LoadMenu()
     {
         SceneManager.LoadScene("Menu");
@@ -107,5 +117,10 @@ public class LeaderBoardManager : MonoBehaviour
     public int GetTopTenScore()
     {
         return _topTenScore;
+    }
+
+    public int GetPlayersBestScore()
+    {
+        return _playerBestScore;
     }
 }
