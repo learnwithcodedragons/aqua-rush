@@ -19,9 +19,11 @@ public class LeaderBoardManager : MonoBehaviour
 
     private int _topTenScore;
     private bool _leaderBoardReloading;
+    private TMP_Text _loadingText;
 
     private void Start()
     {
+        _loadingText = Loading.GetComponent<TMP_Text>();
         LoadEntries();
     }
 
@@ -73,6 +75,7 @@ public class LeaderBoardManager : MonoBehaviour
         if (regex.IsMatch(userName)) 
         {
             Loading.SetActive(true);
+            _loadingText.text = "Updating Leader Board...";
             UserNameValidationText.SetActive(false);
             LeaderBoardEntry.SetActive(false);
             LeaderBoard.SetActive(false);
@@ -80,8 +83,8 @@ public class LeaderBoardManager : MonoBehaviour
             Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
                 if (isSuccessful)
                 {
+                    _loadingText.text = "Reloading Leader Board...";
                     LoadEntries();
-                    LeaderBoard.SetActive(true);
                 }
                 else
                 {
