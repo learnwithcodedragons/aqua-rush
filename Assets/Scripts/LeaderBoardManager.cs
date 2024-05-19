@@ -3,6 +3,7 @@ using UnityEngine;
 using Dan.Main;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class LeaderBoardManager : MonoBehaviour
     public TMP_InputField _userNameInput;
     public Timer Timer;
     public GameObject LeaderBoard;
+    public GameObject UserNameValidationText;
 
     private void Start()
     {
@@ -29,17 +31,31 @@ public class LeaderBoardManager : MonoBehaviour
     public void UploadEntry()
     {
         var seconds = Timer.GetTimeElapsedInSeconds();
-        Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
-            if (isSuccessful)
-            {
-                LoadEntries();
-                LeaderBoard.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("Error uploading score");
-            }
-        });
+
+        var userName = _userNameInput.text;
+        string pattern = @"^[a-zA-Z0-9]+$";
+        Regex regex = new Regex(pattern);
+        
+        if (regex.IsMatch(userName)) 
+        {
+            UserNameValidationText.SetActive(false);
+            Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
+                if (isSuccessful)
+                {
+                    LoadEntries();
+                    LeaderBoard.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogError("Error updating leaderboard");
+                    LoadMenu();
+                }
+            });
+        } 
+        else 
+        {
+            UserNameValidationText.SetActive(true);
+        } 
     }
 
     public void LoadMenu()
