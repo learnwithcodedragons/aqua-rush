@@ -25,6 +25,7 @@ public class LeaderBoardManager : MonoBehaviour
     private void Start()
     {
         _loadingText = Loading.GetComponent<TMP_Text>();
+        ShowLeaderBoardLoading();
         LoadEntries();
         SetPlayerBestScore();
     }
@@ -63,25 +64,20 @@ public class LeaderBoardManager : MonoBehaviour
             Loading.SetActive(false);
             LeaderBoard.SetActive(false);
             ErrorMessage.SetActive(true);
-        }
-            );
+        });
     }
     public void UploadEntry()
     {
         var seconds = Timer.GetTimeElapsedInSeconds();
-
         var userName = _userNameInput.text;
         string pattern = @"^[a-zA-Z0-9]{1,8}$";
         Regex regex = new Regex(pattern);
         
         if (regex.IsMatch(userName)) 
         {
-            Loading.SetActive(true);
-            _loadingText.text = "Updating Leader Board...";
             UserNameValidationText.SetActive(false);
             LeaderBoardEntry.SetActive(false);
-            LeaderBoard.SetActive(false);
-            _leaderBoardReloading = true;
+            ShowLeaderBoardLoading();
             Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
                 if (isSuccessful)
                 {
@@ -122,5 +118,13 @@ public class LeaderBoardManager : MonoBehaviour
     public int GetPlayersBestScore()
     {
         return _playerBestScore;
+    }
+
+    private void ShowLeaderBoardLoading()
+    {
+        Loading.SetActive(true);
+        _loadingText.text = "Updating Leader Board...";
+        LeaderBoard.SetActive(false);
+        _leaderBoardReloading = true;
     }
 }

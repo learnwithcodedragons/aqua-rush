@@ -112,7 +112,10 @@ public class PlayerController : MonoBehaviour
             var playerBestScore = _leaderBoardManager.GetPlayersBestScore();
             var timeElapsed = GameTimer.GetTimeElapsedInSeconds();
 
-            if (timeElapsed > topTenScore  && timeElapsed > playerBestScore )
+            Debug.Log($"timeElapsed {timeElapsed} topTen {topTenScore} playerBestScore {playerBestScore} ");
+            if (timeElapsed > topTenScore  
+                && timeElapsed > playerBestScore
+                && topTenScore != 0)
             {
                 LeaderBoardEntry.SetActive(true);
             }
