@@ -49,3 +49,6 @@ TagManager:
   - name: player
     uniqueID: 1196592227
     locked: 0
+  - name: controls
+    uniqueID: 2194218073
+    locked: 0
