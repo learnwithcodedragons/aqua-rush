@@ -823,7 +823,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: LEVELPLAY_DEPENDENCIES_INSTALLED
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
@@ -910,7 +911,9 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Purchasing: 0
+    Unity Ads: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -933,7 +936,7 @@ PlayerSettings:
   cloudProjectId: d7f76b54-bf0c-43d9-a3ff-f812b559cea5
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Aqa Rush
+  projectName: Aqua Rush
   organizationId: codedragons
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

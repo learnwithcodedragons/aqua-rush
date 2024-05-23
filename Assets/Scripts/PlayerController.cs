@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         _rb2d = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _direction = Direction.Centre;
-        _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>();
+        _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>(); 
     }
 
     void Update()
