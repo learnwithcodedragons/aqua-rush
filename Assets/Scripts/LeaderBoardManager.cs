@@ -1,14 +1,20 @@
 
 using UnityEngine;
-using Dan.Main;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
-using System.Linq;
+using UnityEngine.UI;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Unity.Services.Leaderboards;
+using System;
+using Unity.Services.Leaderboards.Models;
+using Newtonsoft.Json;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 
 public class LeaderBoardManager : MonoBehaviour
 {
-    public TMP_Text[] _leadersText;
     public TMP_InputField _userNameInput;
     public Timer Timer;
     public GameObject LeaderBoard;
@@ -17,56 +23,105 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject Loading;
     public GameObject ErrorMessage;
 
+    const string LeaderboardId = "aqua-rush";
+
     private int _topTenScore;
     private int _playerBestScore;
     private bool _leaderBoardReloading;
     private TMP_Text _loadingText;
 
-    private void Start()
+    private Transform _entryContainer;
+
+    private Transform _entryTemplate;
+    private Transform _goldTemplate;
+    private Transform _silverTemplate;
+    private Transform _bronzeTemplate;
+
+    private async void Start()
     {
-        _loadingText = Loading.GetComponent<TMP_Text>();
-        ShowLeaderBoardLoading();
-        LoadEntries();
-        SetPlayerBestScore();
+        await UnityServices.InitializeAsync();
+        await SignInAnonymously();
+
+        _entryContainer = LeaderBoard.transform.Find("Entry Container");
+        _entryTemplate = _entryContainer.transform.Find("Template");
+        _goldTemplate = _entryContainer.transform.Find("Template Gold");
+        _silverTemplate = _entryContainer.transform.Find("Template Silver");
+        _bronzeTemplate = _entryContainer.transform.Find("Template Bronze");
+        _entryTemplate.gameObject.SetActive(false);
+        _goldTemplate.gameObject.SetActive(false);
+        _silverTemplate.gameObject.SetActive(false);
+        _bronzeTemplate.gameObject.SetActive(false);
+
+        await SetPlayerBestScore();
+        await LoadEntries();
     }
 
-    private void LoadEntries()
+    private async Task LoadEntries()
     {
-        Leaderboards.AquaRush.GetEntries((entries) =>
+        _topTenScore = 0;
+        var entries = await GetTopTenScores();
+        Debug.Log(entries);
+        if (entries is null) return;
+
+        entries.ForEach( entry =>
         {
-            if (_leaderBoardReloading)
+            int i = 0;
+            var templateHeight = 30f;
+            var rank = entry.Rank;
+            Transform entryTransform = rank switch
             {
-                _leaderBoardReloading = false;
-                Loading.SetActive(false);
-                LeaderBoard.SetActive(true);
+                1 => Instantiate(_goldTemplate, _entryContainer),
+                2 => Instantiate(_silverTemplate, _entryContainer),
+                3 => Instantiate(_bronzeTemplate, _entryContainer),
+                _ => Instantiate(_entryTemplate, _entryContainer),
+            };
+            RectTransform entryReactTranform = entryTransform.GetComponent<RectTransform>();
+            entryReactTranform.anchoredPosition = new Vector2(0, -templateHeight * i);
+
+            var minutes = entry.Score / 60;
+            var seconds = entry.Score % 60;
+            var timeString = "0:00";
+            if (entry.Score < 60)
+            {
+                timeString = string.Format("{0:00}", seconds);
+            }
+            else
+            {
+                timeString = string.Format("{0}:{1:00}", minutes, seconds);
             }
 
-            for (var i = 0; i < 10; i++)
+            if (i % 2 == 1)
             {
-                var minutes = entries[i].Score / 60;
-                var seconds = entries[i].Score % 60;
-                var timeString = "0:00";
-                if (entries[i].Score < 60)
-                {
-                    timeString = string.Format("{0:00}", seconds);
-                }
-                else
-                {
-                    timeString = string.Format("{0}:{1:00}", minutes, seconds);
-                }
-
-                _leadersText[entries[i].Rank - 1].text = $"{entries[i].Rank}.{entries[i].Username} {timeString}";
+                var image = entryTransform.GetComponent<Image>();
+                image.color = new Color32(255, 255, 225, 100);
             }
 
-            _topTenScore = entries.ToList().Find(e => e.Rank == 10).Score;
-        }, error =>
-        {
-            Loading.SetActive(false);
-            LeaderBoard.SetActive(false);
-            ErrorMessage.SetActive(true);
-        });
+            var position = entryTransform.Find("Position");
+            var positionText = position.GetComponent<TMP_Text>();
+            positionText.text = AddPositionSuffix(entry.Rank + 1);
+
+            var score = entryTransform.Find("Time");
+            var scoreText = score.GetComponent<TMP_Text>();
+            scoreText.text = timeString;
+
+
+            var name = entryTransform.Find("Name");
+            var nameText = name.GetComponent<TMP_Text>();
+
+            var metadata = JsonUtility.FromJson<MetaData>(entry.Metadata);
+            nameText.text = metadata.name;
+
+            entryTransform.gameObject.SetActive(true);
+            i++;
+
+            if(entry.Score > _topTenScore)
+            {
+                _topTenScore = (int)entry.Score;
+            }
+        });     
     }
-    public void UploadEntry()
+
+    public async void UploadEntry()
     {
         var seconds = Timer.GetTimeElapsedInSeconds();
         var userName = _userNameInput.text;
@@ -77,19 +132,9 @@ public class LeaderBoardManager : MonoBehaviour
         {
             UserNameValidationText.SetActive(false);
             LeaderBoardEntry.SetActive(false);
-            ShowLeaderBoardLoading();
-            Leaderboards.AquaRush.UploadNewEntry(_userNameInput.text, seconds, isSuccessful => {
-                if (isSuccessful)
-                {
-                    _loadingText.text = "Reloading Leader Board...";
-                    LoadEntries();
-                }
-                else
-                {
-                    Debug.LogError("Error updating leaderboard");
-                    LoadMenu();
-                }
-            });
+            // ShowLeaderBoardLoading();
+            await AddScore(seconds, _userNameInput.text);
+            await LoadEntries();
         } 
         else 
         {
@@ -97,12 +142,10 @@ public class LeaderBoardManager : MonoBehaviour
         } 
     }
 
-    private void SetPlayerBestScore()
+    private async Task SetPlayerBestScore()
     {
-        Leaderboards.AquaRush.GetPersonalEntry(entry =>
-        {
-            _playerBestScore = entry.Score;
-        });
+        var score = await GetPlayerScore();
+        _playerBestScore = score;
     }
 
     public void LoadMenu()
@@ -127,4 +170,87 @@ public class LeaderBoardManager : MonoBehaviour
         LeaderBoard.SetActive(false);
         _leaderBoardReloading = true;
     }
+    async Task SignInAnonymously()
+    {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+        };
+        AuthenticationService.Instance.SignInFailed += s =>
+        {
+            Debug.Log(s);
+        };
+
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    }
+
+    public async Task AddScore(int score, string name)
+    {
+        var metadata = new Dictionary<string, string>();
+        metadata.Add("name", name);
+        var scoreResponse =
+            await LeaderboardsService
+            .Instance
+            .AddPlayerScoreAsync(LeaderboardId, score, new AddPlayerScoreOptions { Metadata = metadata });
+
+        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
+    }
+
+    public async Task<List<LeaderboardEntry>> GetTopTenScores()
+    {
+        try
+        {
+            var scoresResponse =
+                await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId, new GetScoresOptions { IncludeMetadata = true, Limit = 10 });
+            return scoresResponse.Results;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return null;
+        }
+    }
+
+    public async Task<int> GetPlayerScore()
+    {
+        try
+        {
+            var scoreResponse =
+            await LeaderboardsService.Instance.GetPlayerScoreAsync(LeaderboardId, new GetPlayerScoreOptions { IncludeMetadata = true });
+            return (int)scoreResponse.Score;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return 0;
+        }
+    }
+
+    private string AddPositionSuffix(int number)
+    {
+        // Handle special cases for 11, 12, and 13
+        if (number % 100 >= 11 && number % 100 <= 13)
+        {
+            return number + "th";
+        }
+
+        // Determine the suffix based on the last digit
+        switch (number % 10)
+        {
+            case 1:
+                return number + "st";
+            case 2:
+                return number + "nd";
+            case 3:
+                return number + "rd";
+            default:
+                return number + "th";
+        }
+    }
+}
+
+[Serializable]
+public class MetaData
+{
+    public string name;
 }

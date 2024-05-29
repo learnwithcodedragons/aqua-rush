@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             GameOverPanel.SetActive(true);
+            OnScreenControls.SetActive(false);
             _canMove = false;
             GameTimer.StopTimer();
             Obstacles.StopSpawing();
@@ -116,8 +117,7 @@ public class PlayerController : MonoBehaviour
 
             Debug.Log($"timeElapsed {timeElapsed} topTen {topTenScore} playerBestScore {playerBestScore} ");
             if (timeElapsed > topTenScore  
-                && timeElapsed > playerBestScore
-                && topTenScore != 0)
+                && timeElapsed > playerBestScore)
             {
                 LeaderBoardEntry.SetActive(true);
             }
