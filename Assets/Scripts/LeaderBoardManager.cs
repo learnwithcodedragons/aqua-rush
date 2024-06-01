@@ -10,8 +10,6 @@ using Unity.Services.Leaderboards;
 using System;
 using Unity.Services.Leaderboards.Models;
 using Newtonsoft.Json;
-using Unity.Services.Authentication;
-using Unity.Services.Core;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -20,28 +18,19 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject LeaderBoard;
     public GameObject UserNameValidationText;
     public GameObject LeaderBoardEntry;
-    public GameObject Loading;
-    public GameObject ErrorMessage;
 
     const string LeaderboardId = "aqua-rush";
 
     private int _topTenScore;
     private int _playerBestScore;
-    private bool _leaderBoardReloading;
-    private TMP_Text _loadingText;
-
     private Transform _entryContainer;
-
     private Transform _entryTemplate;
     private Transform _goldTemplate;
     private Transform _silverTemplate;
     private Transform _bronzeTemplate;
-
+ 
     private async void Start()
     {
-        await UnityServices.InitializeAsync();
-        await SignInAnonymously();
-
         _entryContainer = LeaderBoard.transform.Find("Entry Container");
         _entryTemplate = _entryContainer.transform.Find("Template");
         _goldTemplate = _entryContainer.transform.Find("Template Gold");
@@ -53,7 +42,9 @@ public class LeaderBoardManager : MonoBehaviour
         _bronzeTemplate.gameObject.SetActive(false);
 
         await SetPlayerBestScore();
+        Debug.Log("Player best score set...");
         await LoadEntries();
+        Debug.Log("Successfully loaded entries");
     }
 
     private async Task LoadEntries()
@@ -124,7 +115,7 @@ public class LeaderBoardManager : MonoBehaviour
     public async void UploadEntry()
     {
         var seconds = Timer.GetTimeElapsedInSeconds();
-        var userName = _userNameInput.text;
+        var userName = _userNameInput.text.Trim();
         string pattern = @"^[a-zA-Z0-9]{1,8}$";
         Regex regex = new Regex(pattern);
         
@@ -132,7 +123,6 @@ public class LeaderBoardManager : MonoBehaviour
         {
             UserNameValidationText.SetActive(false);
             LeaderBoardEntry.SetActive(false);
-            // ShowLeaderBoardLoading();
             await AddScore(seconds, _userNameInput.text);
             await LoadEntries();
         } 
@@ -163,29 +153,9 @@ public class LeaderBoardManager : MonoBehaviour
         return _playerBestScore;
     }
 
-    private void ShowLeaderBoardLoading()
-    {
-        Loading.SetActive(true);
-        _loadingText.text = "Updating Leader Board...";
-        LeaderBoard.SetActive(false);
-        _leaderBoardReloading = true;
-    }
-    async Task SignInAnonymously()
-    {
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
-        };
-        AuthenticationService.Instance.SignInFailed += s =>
-        {
-            Debug.Log(s);
-        };
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
-
     public async Task AddScore(int score, string name)
     {
+        Debug.Log("Leaderboard uploading score...");
         var metadata = new Dictionary<string, string>();
         metadata.Add("name", name);
         var scoreResponse =
@@ -193,7 +163,7 @@ public class LeaderBoardManager : MonoBehaviour
             .Instance
             .AddPlayerScoreAsync(LeaderboardId, score, new AddPlayerScoreOptions { Metadata = metadata });
 
-        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
+        Debug.Log("Leaderboard: " + JsonConvert.SerializeObject(scoreResponse));
     }
 
     public async Task<List<LeaderboardEntry>> GetTopTenScores()

@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour
 {
     public void OnPlay()
     {
+        Debug.Log("Play new game click");
         SceneManager.LoadScene("Game");
     }
 }
