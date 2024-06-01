@@ -227,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 84611129}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -894.1521, y: -413.3158, z: 4.1667757}
+  m_LocalPosition: {x: -894.1521, y: -434, z: 4.1667757}
   m_LocalScale: {x: 0.7894737, y: 0.7894737, z: 0.7894737}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2988,7 +2988,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -390.51605, y: 238.35783}
+  m_AnchoredPosition: {x: -390.51605, y: 219}
   m_SizeDelta: {x: -778.1104, y: -635.1722}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &923734424
@@ -3335,7 +3335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e92a071505db64cb1c278cd775b69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 5
+  MovementSpeed: 1
   GameContoller: {fileID: 749590733}
   GameTimer: {fileID: 1856162072}
   GameOverPanel: {fileID: 1310946728}

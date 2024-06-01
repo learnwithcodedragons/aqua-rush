@@ -51,14 +51,14 @@ public class LeaderBoardManager : MonoBehaviour
     {
         _topTenScore = 0;
         var entries = await GetTopTenScores();
-        Debug.Log(entries);
         if (entries is null) return;
 
         entries.ForEach( entry =>
         {
+            Debug.Log("Adding entry: " + JsonConvert.SerializeObject(entry));
             int i = 0;
             var templateHeight = 30f;
-            var rank = entry.Rank;
+            var rank = entry.Rank + 1;
             Transform entryTransform = rank switch
             {
                 1 => Instantiate(_goldTemplate, _entryContainer),
@@ -172,6 +172,7 @@ public class LeaderBoardManager : MonoBehaviour
         {
             var scoresResponse =
                 await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId, new GetScoresOptions { IncludeMetadata = true, Limit = 10 });
+            Debug.Log("Leaderboard: " + JsonConvert.SerializeObject(scoresResponse.Results));
             return scoresResponse.Results;
         }
         catch (Exception e)
