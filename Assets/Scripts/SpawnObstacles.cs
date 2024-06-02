@@ -1,17 +1,23 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class SpawnObstacles : MonoBehaviour
 {
     public GameObject[] Obstacles;
+    public Timer GameTimer;
     
     private float _spawnInterval;
     private float _difficultyInterval = 10;
     private float _currentDifficulty = 2;
-    private bool _isSpawningObstacles = true;
-   
+    private bool _isSpawningObstacles = false;
+    public TMP_Text _countdownText;
+    private float _countdownTime = 5.0f;
+
     private void Start()
     {
         _spawnInterval = 2;
+        StartCoroutine(CountdownCoroutine());
     }
 
     private void FixedUpdate()
@@ -52,5 +58,23 @@ public class SpawnObstacles : MonoBehaviour
     public void StopSpawing()
     {
         _isSpawningObstacles = false;
+    }
+
+    IEnumerator CountdownCoroutine()
+    {
+        while (_countdownTime > 0)
+        {
+            _countdownText.text = _countdownTime.ToString("F0"); // Display as integer
+            yield return new WaitForSeconds(1.0f);
+            _countdownTime--;
+        }
+
+        _countdownText.text = "GO!";
+        yield return new WaitForSeconds(1);
+
+        _countdownText.text = "";
+
+        _isSpawningObstacles = true;
+        GameTimer.StartTimer();
     }
 }

@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
             Debug.Log($"timeElapsed {timeElapsed} topTen {topTenScore} playerBestScore {playerBestScore} ");
             if (timeElapsed > topTenScore  
-                && timeElapsed > playerBestScore)
+                && timeElapsed > playerBestScore && topTenScore != null)
             {
                 LeaderBoardEntry.SetActive(true);
             }

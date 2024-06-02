@@ -18,10 +18,11 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject LeaderBoard;
     public GameObject UserNameValidationText;
     public GameObject LeaderBoardEntry;
+    public GameObject _ErrorMessage;
 
     const string LeaderboardId = "aqua-rush";
 
-    private int _topTenScore;
+    private int? _topTenScore;
     private int _playerBestScore;
     private Transform _entryContainer;
     private Transform _entryTemplate;
@@ -51,7 +52,11 @@ public class LeaderBoardManager : MonoBehaviour
     {
         _topTenScore = 0;
         var entries = await GetTopTenScores();
-        if (entries is null) return;
+        if (entries is null) 
+        {
+            _topTenScore = null;
+            return;
+        };
         int i = 0;
 
         entries.ForEach( entry =>
@@ -146,7 +151,7 @@ public class LeaderBoardManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    public int GetTopTenScore()
+    public int? GetTopTenScore()
     {
         return _topTenScore;
     }
@@ -173,6 +178,7 @@ public class LeaderBoardManager : MonoBehaviour
     {
         try
         {
+            _ErrorMessage.SetActive(false);
             var scoresResponse =
                 await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId, new GetScoresOptions { IncludeMetadata = true, Limit = 10 });
             Debug.Log("Leaderboard: " + JsonConvert.SerializeObject(scoresResponse.Results));
@@ -180,6 +186,7 @@ public class LeaderBoardManager : MonoBehaviour
         }
         catch (Exception e)
         {
+            _ErrorMessage.SetActive(true);
             Debug.Log(e.Message);
             return null;
         }

@@ -6,19 +6,14 @@ public class Timer : MonoBehaviour
     public TMP_Text _timerText;
 
     private bool _isTiming;
-
-
     private float timeElapsed;
     private int minutes;
     private int seconds;
     private string timeString;
 
-
-
-
     private void Start()
     {
-        _isTiming = true;
+        _isTiming = false;
     }
 
 
