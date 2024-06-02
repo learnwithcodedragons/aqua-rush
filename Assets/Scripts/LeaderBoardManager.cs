@@ -52,26 +52,29 @@ public class LeaderBoardManager : MonoBehaviour
         _topTenScore = 0;
         var entries = await GetTopTenScores();
         if (entries is null) return;
+        int i = 0;
 
         entries.ForEach( entry =>
         {
             Debug.Log("Adding entry: " + JsonConvert.SerializeObject(entry));
-            int i = 0;
             var templateHeight = 30f;
             var rank = entry.Rank + 1;
-            Transform entryTransform = rank switch
+            var entryTransform = rank switch
             {
                 1 => Instantiate(_goldTemplate, _entryContainer),
                 2 => Instantiate(_silverTemplate, _entryContainer),
                 3 => Instantiate(_bronzeTemplate, _entryContainer),
                 _ => Instantiate(_entryTemplate, _entryContainer),
             };
-            RectTransform entryReactTranform = entryTransform.GetComponent<RectTransform>();
+            Debug.Log("EntryTransform is null:" + entryTransform is null);
+            RectTransform rectTransform = entryTransform.GetComponent<RectTransform>();
+            RectTransform entryReactTranform = rectTransform;
             entryReactTranform.anchoredPosition = new Vector2(0, -templateHeight * i);
 
-            var minutes = entry.Score / 60;
-            var seconds = entry.Score % 60;
+            var minutes = (int)(entry.Score / 60);
+            var seconds = (int)entry.Score % 60;
             var timeString = "0:00";
+            Debug.Log("Entry socre:" + entry.Score);
             if (entry.Score < 60)
             {
                 timeString = string.Format("{0:00}", seconds);
