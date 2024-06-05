@@ -13,6 +13,8 @@ public class SpawnObstacles : MonoBehaviour
     private bool _isSpawningObstacles = false;
     public TMP_Text _countdownText;
     private float _countdownTime = 5.0f;
+    private int _maxDifficultyIncreases = 5;
+    private int _currentNumberOfDiffultyIncreases;
 
     private void Start()
     {
@@ -34,10 +36,12 @@ public class SpawnObstacles : MonoBehaviour
         if(_difficultyInterval > 0)
         {
             _difficultyInterval -= Time.deltaTime;
-        } else
+        }
+        else if(_currentNumberOfDiffultyIncreases < _maxDifficultyIncreases)
         {
             _currentDifficulty -= 0.2f;
             _difficultyInterval = 30;
+            _currentNumberOfDiffultyIncreases++;
         }
     }
 
