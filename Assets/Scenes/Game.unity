@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 84611130}
   m_Layer: 0
-  m_Name: Entry
+  m_Name: Add Entry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2473,6 +2473,9 @@ MonoBehaviour:
   - {fileID: 3102809582631922557, guid: 9f15a73518594ef4fa71e0cf2118d800, type: 3}
   - {fileID: 3102809582631922557, guid: a57347a8cd8f8984989eb5c265061e0f, type: 3}
   GameTimer: {fileID: 1856162072}
+  BonusObstacles:
+  - {fileID: 3102809582631922557, guid: 022ffff54fa11714bb50606c9ebced94, type: 3}
+  - {fileID: 3102809582631922557, guid: f7651032217c6a043b62a27571877b39, type: 3}
   _countdownText: {fileID: 2081703518}
 --- !u!114 &749590737
 MonoBehaviour:
@@ -2517,6 +2520,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4533d31a815e7c24e8cd447e69121cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundOffSprite: {fileID: 21300000, guid: 17e6f5cb4360a7e409fa522b2b35fd4c, type: 3}
+  SoundOnSprite: {fileID: 21300000, guid: 10910f284f812f747bf68523a807e4ac, type: 3}
+  Button: {fileID: 889971493}
 --- !u!1 &812720506
 GameObject:
   m_ObjectHideFlags: 0
@@ -3116,7 +3122,7 @@ GameObject:
   - component: {fileID: 889971496}
   - component: {fileID: 889971495}
   m_Layer: 5
-  m_Name: Sound
+  m_Name: Sound Control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3217,7 +3223,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17e6f5cb4360a7e409fa522b2b35fd4c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 10910f284f812f747bf68523a807e4ac, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4964,8 +4970,8 @@ MonoBehaviour:
     m_NormalColor: {r: 0.36078432, g: 0.69803923, b: 0, a: 1}
     m_HighlightedColor: {r: 0.4285793, g: 0.8113208, b: 0.019134922, a: 1}
     m_PressedColor: {r: 0.44383505, g: 0.754717, b: 0.11391955, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 0.36078432, g: 0.69803923, b: 0, a: 1}
+    m_DisabledColor: {r: 0.36078432, g: 0.69803923, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

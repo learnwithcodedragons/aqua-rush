@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -6,15 +7,17 @@ public class SpawnObstacles : MonoBehaviour
 {
     public GameObject[] Obstacles;
     public Timer GameTimer;
+    public GameObject[] BonusObstacles;
     
     private float _spawnInterval;
-    private float _difficultyInterval = 10;
+    private float _difficultyInterval = 15;
     private float _currentDifficulty = 2;
     private bool _isSpawningObstacles = false;
     public TMP_Text _countdownText;
     private float _countdownTime = 5.0f;
     private int _maxDifficultyIncreases = 5;
-    private int _currentNumberOfDiffultyIncreases;
+    private int _currentNumberOfDiffultyIncreases = 0;
+    private bool _bonusObstaclesAdded;
 
     private void Start()
     {
@@ -40,8 +43,14 @@ public class SpawnObstacles : MonoBehaviour
         else if(_currentNumberOfDiffultyIncreases < _maxDifficultyIncreases)
         {
             _currentDifficulty -= 0.2f;
-            _difficultyInterval = 30;
+            _difficultyInterval = 15;
             _currentNumberOfDiffultyIncreases++;
+        }
+
+        if(_currentNumberOfDiffultyIncreases == 4 && !_bonusObstaclesAdded)
+        {
+            Obstacles = Obstacles.Concat(BonusObstacles).ToArray();
+            _bonusObstaclesAdded = true;
         }
     }
 
@@ -68,7 +77,7 @@ public class SpawnObstacles : MonoBehaviour
     {
         while (_countdownTime > 0)
         {
-            _countdownText.text = _countdownTime.ToString("F0"); // Display as integer
+            _countdownText.text = _countdownTime.ToString("F0");
             yield return new WaitForSeconds(1.0f);
             _countdownTime--;
         }
