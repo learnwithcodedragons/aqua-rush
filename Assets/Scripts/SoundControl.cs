@@ -10,16 +10,17 @@ public class SoundControl : MonoBehaviour
     private AudioSource _audio;
     private Image _image;
 
-
     private void Start()
     {
         _audio = GetComponent<AudioSource>();
         _image = Button.GetComponent<Image>();
+        _audio.mute = PersistenceManager.Instance.IsAudioMute;
     }
 
     public void ToggleSound()
     {
         _audio.mute = !_audio.mute;
+        PersistenceManager.Instance.IsAudioMute = _audio.mute;
 
         if (_audio.mute)
         {
