@@ -3,6 +3,7 @@ using UnityEngine;
 public class PersistenceManager : MonoBehaviour
 {
     private bool _isAudioMute;
+    private int _playCounter = 0;
     public bool IsAudioMute
     {
         get => _isAudioMute;
@@ -21,4 +22,15 @@ public class PersistenceManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+    public void IncrementNumberOfPlays()
+    {
+        _playCounter++;
+    }
+
+    public bool ShouldShowAdvert()
+    {
+        return _playCounter % 3 == 0 && _playCounter != 0;
+    }
+
 }

@@ -13,10 +13,14 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     {
         InitializeAds();
         var adds = Adds.GetComponent<InterstitialAds>();
-        adds.LoadAd();
-        adds.ShowAd();
-        
 
+        if (PersistenceManager.Instance.ShouldShowAdvert())
+        {
+            adds.LoadAd();
+            adds.ShowAd();
+        }
+
+        PersistenceManager.Instance.IncrementNumberOfPlays();
     }
 
     public void InitializeAds()
