@@ -36,7 +36,9 @@ public class PlayerController : MonoBehaviour
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _direction = Direction.Centre;
+        _direction = Direction.Right;
+        _anim.SetBool("IsRowing", false);
+        _anim.SetBool("IsLeft", true);
         _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>(); 
     }
 
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_canMove)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Gamepad.current.buttonEast.wasPressedThisFrame) && _direction != Direction.Centre)
+            if (Gamepad.current.buttonEast.wasPressedThisFrame)
             {
                 _anim.SetBool("IsRowing", true);
 
@@ -62,14 +64,14 @@ public class PlayerController : MonoBehaviour
                 
             }
 
-            if (Input.GetKeyUp(KeyCode.Space) || Gamepad.current.buttonEast.wasReleasedThisFrame)
+            if (Gamepad.current.buttonEast.wasReleasedThisFrame)
             {
                 _anim.SetBool("IsRowing", false);
                 _moveRight = false;
                 _moveLeft = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Gamepad.current.dpad.left.wasPressedThisFrame)
+            if (Gamepad.current.dpad.left.wasPressedThisFrame)
             {
                 _anim.SetBool("IsRowing", false);
                 _anim.SetBool("IsLeft", true);
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
                 _moveLeft = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Gamepad.current.dpad.right.wasPressedThisFrame)
+            if (Gamepad.current.dpad.right.wasPressedThisFrame)
             {
                 _anim.SetBool("IsRowing", false);
                 _anim.SetBool("IsRight", true);

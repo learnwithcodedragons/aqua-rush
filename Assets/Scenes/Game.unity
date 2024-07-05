@@ -1292,6 +1292,7 @@ GameObject:
   - component: {fileID: 429133893}
   - component: {fileID: 429133892}
   - component: {fileID: 429133894}
+  - component: {fileID: 429133895}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -1369,6 +1370,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Gamepad>/dpad/right
+--- !u!95 &429133895
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429133890}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4a0fd89ed7f251b4ca1108a82b248ffa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &459629717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,9 +2353,9 @@ GameObject:
   - component: {fileID: 749590734}
   - component: {fileID: 749590735}
   - component: {fileID: 749590736}
-  - component: {fileID: 749590737}
   - component: {fileID: 749590738}
   - component: {fileID: 749590739}
+  - component: {fileID: 749590740}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -2476,20 +2498,8 @@ MonoBehaviour:
   BonusObstacles:
   - {fileID: 3102809582631922557, guid: 022ffff54fa11714bb50606c9ebced94, type: 3}
   - {fileID: 3102809582631922557, guid: f7651032217c6a043b62a27571877b39, type: 3}
+  SpawnCountDown: {fileID: 2081703516}
   _countdownText: {fileID: 2081703518}
---- !u!114 &749590737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749590733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795d15fb5d4f10648927db43a61467ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameInfo: {fileID: 866581436}
 --- !u!114 &749590738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2523,6 +2533,23 @@ MonoBehaviour:
   SoundOffSprite: {fileID: 21300000, guid: 17e6f5cb4360a7e409fa522b2b35fd4c, type: 3}
   SoundOnSprite: {fileID: 21300000, guid: 10910f284f812f747bf68523a807e4ac, type: 3}
   Button: {fileID: 889971493}
+--- !u!114 &749590740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749590733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518c1e05f27ec344091a5842189d5cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TutorialText: {fileID: 866581438}
+  PaddleAnimator: {fileID: 1901349903}
+  LeftAnimator: {fileID: 1843866293}
+  RightAnimator: {fileID: 429133895}
+  SpawnObstaclesScript: {fileID: 749590736}
 --- !u!1 &781486051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,7 +2765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.26947, y: 147.876}
+  m_AnchoredPosition: {x: 0.26953125, y: 147.87598}
   m_SizeDelta: {x: -0.53882, y: -630.2717}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817172087
@@ -3053,8 +3080,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22.395826, y: 234.9902}
-  m_SizeDelta: {x: 755.7359, y: 145.9093}
+  m_AnchoredPosition: {x: -2.4133, y: 210.67468}
+  m_SizeDelta: {x: 805.354, y: 181.0106}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &866581438
 MonoBehaviour:
@@ -6211,7 +6238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.8480225, y: -13}
+  m_AnchoredPosition: {x: -5.8481445, y: -13}
   m_SizeDelta: {x: -431.4456, y: -293.8789}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1782066505
@@ -6532,6 +6559,7 @@ GameObject:
   - component: {fileID: 1843866291}
   - component: {fileID: 1843866290}
   - component: {fileID: 1843866292}
+  - component: {fileID: 1843866293}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -6609,6 +6637,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Gamepad>/dpad/left
+--- !u!95 &1843866293
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843866288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0cff95c4e8f01fe4798c411fed78aea0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1845231634
 GameObject:
   m_ObjectHideFlags: 0
@@ -6904,6 +6953,7 @@ GameObject:
   - component: {fileID: 1901349899}
   - component: {fileID: 1901349901}
   - component: {fileID: 1901349902}
+  - component: {fileID: 1901349903}
   m_Layer: 5
   m_Name: Paddle
   m_TagString: Untagged
@@ -6950,7 +7000,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f05890f6e32dcd84e8b5c41286220ddf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a951baea8fed514f93921c9dd0a7974, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6996,6 +7046,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Gamepad>/buttonEast
+--- !u!95 &1901349903
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901349897}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72c2fb0d223d8924595d959222e7a56f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1933904282
 GameObject:
   m_ObjectHideFlags: 0
@@ -7276,7 +7347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2081703517
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7293,7 +7364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 137, y: 69}
+  m_AnchoredPosition: {x: 137, y: 209}
   m_SizeDelta: {x: 755.7359, y: 145.9093}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2081703518

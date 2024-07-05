@@ -8,12 +8,14 @@ public class SpawnObstacles : MonoBehaviour
     public GameObject[] Obstacles;
     public Timer GameTimer;
     public GameObject[] BonusObstacles;
-    
+    public GameObject SpawnCountDown;
+    public TMP_Text _countdownText;
+
+
     private float _spawnInterval;
     private float _difficultyInterval = 15;
     private float _currentDifficulty = 2;
     private bool _isSpawningObstacles = false;
-    public TMP_Text _countdownText;
     private float _countdownTime = 5.0f;
     private int _maxDifficultyIncreases = 5;
     private int _currentNumberOfDiffultyIncreases = 0;
@@ -21,8 +23,8 @@ public class SpawnObstacles : MonoBehaviour
 
     private void Start()
     {
-        _spawnInterval = 2;
-        StartCoroutine(CountdownCoroutine());
+        _spawnInterval = 4;
+        _countdownText = SpawnCountDown.GetComponent<TMP_Text>();
     }
 
     private void FixedUpdate()
@@ -68,6 +70,11 @@ public class SpawnObstacles : MonoBehaviour
         
     }
 
+    public void StartSpawnCountDown()
+    {
+        StartCoroutine(CountdownCoroutine());
+    }
+
     public void StopSpawing()
     {
         _isSpawningObstacles = false;
@@ -75,6 +82,7 @@ public class SpawnObstacles : MonoBehaviour
 
     IEnumerator CountdownCoroutine()
     {
+        SpawnCountDown.SetActive(true);
         while (_countdownTime > 0)
         {
             _countdownText.text = _countdownTime.ToString("F0");

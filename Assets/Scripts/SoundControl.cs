@@ -15,6 +15,15 @@ public class SoundControl : MonoBehaviour
         _audio = GetComponent<AudioSource>();
         _image = Button.GetComponent<Image>();
         _audio.mute = PersistenceManager.Instance.IsAudioMute;
+
+        if (_audio.mute)
+        {
+            _image.sprite = SoundOffSprite;
+        }
+        else
+        {
+            _image.sprite = SoundOnSprite;
+        }
     }
 
     public void ToggleSound()
