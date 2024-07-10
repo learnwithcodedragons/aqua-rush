@@ -29,6 +29,11 @@ public class SpawnObstacles : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!_isSpawningObstacles)
+        {
+            return;
+        }
+
         if (_spawnInterval > 0)
         {
             _spawnInterval -= Time.deltaTime;
