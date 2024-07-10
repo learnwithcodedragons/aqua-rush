@@ -88,7 +88,7 @@ public class Tutorial : MonoBehaviour
             && TutorialText.gameObject.activeInHierarchy
             && !_tutorialEnded)
         {
-            PersistenceManager.Instance.HasSeenTutorial = true;
+            PersistenceManager.Instance.SetHasSeenTutorial(true);
             EndTutorial();
         }
     }

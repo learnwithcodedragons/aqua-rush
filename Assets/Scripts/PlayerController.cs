@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb2d;
     private bool _canMove = true;
     private Animator _anim;
-    private Direction _direction;
+    private Direction _direction = Direction.Right;
     private bool _moveLeft;
     private bool _moveRight;
     private LeaderBoardManager _leaderBoardManager;
@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _direction = Direction.Right;
         _anim.SetBool("IsRowing", false);
         _anim.SetBool("IsLeft", true);
         _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>(); 
