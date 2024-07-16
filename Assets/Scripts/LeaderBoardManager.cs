@@ -10,6 +10,7 @@ using Unity.Services.Leaderboards;
 using System;
 using Unity.Services.Leaderboards.Models;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class LeaderBoardManager : MonoBehaviour
 {
@@ -57,6 +58,15 @@ public class LeaderBoardManager : MonoBehaviour
             _topTenScore = null;
             return;
         };
+
+        if(entries.Count >= 10)
+        {
+            _topTenScore = (int)entries.Min(e => e.Score);
+        }
+        else
+        {
+            _topTenScore = 0;
+        }
         int i = 0;
 
         entries.ForEach( entry =>
@@ -113,10 +123,7 @@ public class LeaderBoardManager : MonoBehaviour
             entryTransform.gameObject.SetActive(true);
             i++;
 
-            if(entry.Score > _topTenScore)
-            {
-                _topTenScore = (int)entry.Score;
-            }
+            Debug.Log($"score {entry.Score}");
         });     
     }
 
