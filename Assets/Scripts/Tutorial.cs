@@ -41,7 +41,7 @@ public class Tutorial : MonoBehaviour
         if (Gamepad.current.buttonEast.wasPressedThisFrame && !_isPaddlePressed)
         {
             _isPaddlePressed = true;
-            StartCoroutine(UpdateMessage("Press the right arrow button", 3));
+            StartCoroutine(UpdateMessage("Press the right arrow button", 2));
             PaddleAnimator.SetBool("isFlashing", false);
             RightAnimator.SetBool("isFlashing", true);
         }
@@ -61,7 +61,7 @@ public class Tutorial : MonoBehaviour
             && _isRightPressed
             && !_hasPaddledRight)
         {
-            StartCoroutine(UpdateMessage("Press the left arrow button", 3));
+            StartCoroutine(UpdateMessage("Press the left arrow button", 2));
             _hasPaddledRight = true;
             LeftAnimator.SetBool("isFlashing", true);
             PaddleAnimator.SetBool("isFlashing", false); 
