@@ -17,10 +17,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
         if (PersistenceManager.Instance.ShouldShowAdvert())
         {
             adds.LoadAd();
-            adds.ShowAd();
         }
-
-        PersistenceManager.Instance.IncrementNumberOfPlays();
     }
 
     public void InitializeAds()

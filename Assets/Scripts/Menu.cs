@@ -4,9 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
-{
+{  
     public void OnPlay()
     {
+
+        var adds = GameObject.Find("Ads").GetComponent<InterstitialAds>();
+
+        if (PersistenceManager.Instance.ShouldShowAdvert())
+        {
+            adds.ShowAd();
+        }
+
+        PersistenceManager.Instance.IncrementNumberOfPlays();
+
         SceneManager.LoadScene("Game");
     }
 

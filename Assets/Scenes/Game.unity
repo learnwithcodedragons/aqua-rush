@@ -2501,6 +2501,7 @@ GameObject:
   - component: {fileID: 749590738}
   - component: {fileID: 749590739}
   - component: {fileID: 749590740}
+  - component: {fileID: 749590741}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -2695,6 +2696,18 @@ MonoBehaviour:
   LeftAnimator: {fileID: 1843866293}
   RightAnimator: {fileID: 429133895}
   SpawnObstaclesScript: {fileID: 749590736}
+--- !u!114 &749590741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749590733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c1218137156f414c8e76aa4243b374d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &781486051
 GameObject:
   m_ObjectHideFlags: 0
