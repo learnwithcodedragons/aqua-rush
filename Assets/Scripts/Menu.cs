@@ -20,6 +20,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void OnFirstPlay()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
     public void OnTutorial()
     {
         PersistenceManager.Instance.SetHasSeenTutorial(false);
