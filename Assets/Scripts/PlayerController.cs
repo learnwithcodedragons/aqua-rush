@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject LeaderBoardEntry;
     public SpawnObstacles Obstacles;
     public GameObject OnScreenControls;
+    public GameObject Ability;
   
     private Rigidbody2D _rb2d;
     private bool _canMove = true;
@@ -19,6 +20,11 @@ public class PlayerController : MonoBehaviour
     private bool _moveLeft;
     private bool _moveRight;
     private LeaderBoardManager _leaderBoardManager;
+    private bool _isBubbleActive;
+    private float _numberOfSecondsAbilityActive = 10f;
+    private float _expiryWarningSeconds = 3f;
+    private float _abilityTimer;
+    private Animator _bubbleAnim;
 
     enum Direction
     {
@@ -38,7 +44,9 @@ public class PlayerController : MonoBehaviour
         _anim = GetComponent<Animator>();
         _anim.SetBool("IsRowing", false);
         _anim.SetBool("IsLeft", true);
-        _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>(); 
+        _leaderBoardManager = GameContoller.GetComponent<LeaderBoardManager>();
+        _abilityTimer = _numberOfSecondsAbilityActive;
+        _bubbleAnim = Ability.GetComponent<Animator>();
     }
 
     void Update()
@@ -100,12 +108,39 @@ public class PlayerController : MonoBehaviour
                 _rb2d.MovePosition(_rb2d.position + new Vector2(-1, 0) * Time.deltaTime * MovementSpeed);
             }
         }
+
+        if (_isBubbleActive)
+        {
+            if (_abilityTimer > 0)
+            {
+                _abilityTimer -= Time.deltaTime;
+                Debug.Log($"timer: {_abilityTimer}");
+                if (_abilityTimer < _expiryWarningSeconds)
+                {
+                    Debug.Log("IsExpiring true");
+                    _bubbleAnim.SetBool("IsExpiring", true);
+                }
+            }
+            else
+            {
+                Ability.SetActive(false);
+                _abilityTimer = _numberOfSecondsAbilityActive;
+                _isBubbleActive = false;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            if (_isBubbleActive)
+            {
+                Destroy(collision.gameObject);
+                return;
+            }
+
+
             GameOverPanel.SetActive(true);
             OnScreenControls.SetActive(false);
             _canMove = false;
@@ -116,12 +151,21 @@ public class PlayerController : MonoBehaviour
             var playerBestScore = _leaderBoardManager.GetPlayersBestScore();
             var timeElapsed = GameTimer.GetTimeElapsedInSeconds();
 
-            Debug.Log($"timeElapsed {timeElapsed} topTen {topTenScore} playerBestScore {playerBestScore} ");
             if (timeElapsed > topTenScore  
                 && timeElapsed > playerBestScore && topTenScore != null)
             {
                 LeaderBoardEntry.SetActive(true);
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Pickup"))
+        {
+            _isBubbleActive = true;
+            Ability.SetActive(true);
+            Destroy(collision.gameObject);
         }
     }
 }
