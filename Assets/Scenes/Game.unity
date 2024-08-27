@@ -2722,7 +2722,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameTimer: {fileID: 1856162072}
-  PickUp: {fileID: 5152920778454148091, guid: fe5f020b41bc54b41b19b54e908fb9bb, type: 3}
+  Bubble: {fileID: 5152920778454148091, guid: fe5f020b41bc54b41b19b54e908fb9bb, type: 3}
+  Bonus: {fileID: 8110969480237006735, guid: a9f097b8119ef3948a8ad7013c698dd2, type: 3}
 --- !u!1 &781486051
 GameObject:
   m_ObjectHideFlags: 0

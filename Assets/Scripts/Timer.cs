@@ -62,8 +62,18 @@ public class Timer : MonoBehaviour
         return timeString;
     }
 
+    public void AddTime(int seconds)
+    {
+        timeElapsed += seconds;
+    }
+
     public int GetTimeElapsedInSeconds()
     {
         return (int)(minutes * 60) + seconds;
+    }
+
+    public bool IsTiming()
+    {
+        return _isTiming;
     }
 }

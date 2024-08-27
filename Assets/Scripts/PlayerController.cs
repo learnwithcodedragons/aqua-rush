@@ -161,11 +161,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Pickup"))
+        if (collision.gameObject.CompareTag("Bubble"))
         {
             _isBubbleActive = true;
             Ability.SetActive(true);
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("PointsBonus"))
+        {
+
+            GameTimer.AddTime(10);
+            Destroy(collision.gameObject);
+
         }
     }
 }

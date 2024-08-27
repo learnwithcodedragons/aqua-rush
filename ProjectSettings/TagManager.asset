@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - Raft
+  - PointsBonus
+  - Bubble
   - Pickup
   layers:
   - Default

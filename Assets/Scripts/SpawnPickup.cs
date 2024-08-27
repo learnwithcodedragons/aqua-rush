@@ -3,25 +3,34 @@ using UnityEngine;
 public class SpawnPickup : MonoBehaviour
 {
     public Timer GameTimer;
-    public GameObject PickUp;
+    public GameObject Bubble;
+    public GameObject Bonus;
 
-    private bool hasPickUpSpwaned;
-
-    void Update()
+    void Start()
     {
-        if(GameTimer.GetTimeElapsedInSeconds() == 30)
+        if(GameTimer.GetTimeElapsedInSeconds() % 30 == 0)
         {
-            InstantiatePuckUp();
+            InvokeRepeating(nameof(InstantiateBubble), 30.0f, 30.0f);
+            InvokeRepeating(nameof(InstantiateBonus), 20.0f, 30.0f);
         }
     }
 
-    private void InstantiatePuckUp()
+    private void InstantiateBubble()
     {
-        if (!hasPickUpSpwaned)
+        if (GameTimer.IsTiming())
         {
             var position = new Vector3(Random.Range(-2.0f, 1.7f), 4.25f, 0);
-            Instantiate(PickUp, position, Quaternion.identity);
-            hasPickUpSpwaned = true;
+            Instantiate(Bubble, position, Quaternion.identity);
+        }
+    
+    }
+
+    private void InstantiateBonus()
+    {
+        if (GameTimer.IsTiming())
+        {
+            var position = new Vector3(Random.Range(-2.0f, 1.7f), 4.25f, 0);
+            Instantiate(Bonus, position, Quaternion.identity);
         }
     }
 }
